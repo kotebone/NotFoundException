@@ -5,10 +5,11 @@ import ru.netology.domain.Book;
 import ru.netology.domain.Product;
 import ru.netology.exception.NotFoundException;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertArrayEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 class ProductRepositoryTest {
-  private ProductRepository repository = new ProductRepository();
+  private final ProductRepository repository = new ProductRepository();
   private final Book coreJava = new Book();
   Book book1 = new Book(1, "Бедные люди", 249, "Ф.М.Достоевский");
   Book book2 = new Book(2, "Собачье сердце", 339, "М.А. Булгаков");
@@ -34,8 +35,10 @@ class ProductRepositoryTest {
 
   @Test
   public void notFound(){
-    int id = 1;
+    repository.save(coreJava);
+    repository.save(book1);
+    int id = 7;
 
-    assertThrows(NotFoundException.class, () -> repository.removeById(1), "Element with id: " + id + " not found");
+    assertThrows(NotFoundException.class, () -> repository.removeById(7), "Element with id: " + id + " not found");
   }
 }
